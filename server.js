@@ -4,19 +4,38 @@ const path = require("path");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Serve static files
+// Static files (CSS, JS, images, etc.)
 app.use(express.static(path.join(__dirname, "public")));
 
-// Redirect the root URL to /home
+// Home
 app.get("/", (req, res) => {
-    res.redirect("/home");
+    res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Serve your HTML at /home
 app.get("/home", (req, res) => {
     res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
+// Our Team
+app.get("/team", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "team.html"));
+});
+
+// Classes
+app.get("/classes", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "classes.html"));
+});
+
+// Support
+app.get("/support", (req, res) => {
+    res.sendFile(path.join(__dirname, "public", "support.html"));
+});
+
+// 404 Page
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, "public", "404.html"));
+});
+
 app.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`✅ ActiveCentres website running on http://localhost:${PORT}`);
 });
